@@ -20,7 +20,7 @@ Pour ce faire, nous allons utiliser comme base un site de vente de bonbons.
 ## Auteurs
 
 - Avramov Johann
-- Bardy Mathias
+- Bardy Matthias
 - Bletry Julien
 - Zaher Hicham
 
