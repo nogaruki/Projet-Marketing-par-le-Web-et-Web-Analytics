@@ -1,0 +1,8 @@
+{
+    "id": "client4",
+    "produits": [
+      { "id": "Tagada", "nom": "Tagada", "prix": 0.5, "quantite": 1 },
+      { "id": "Caramel", "nom": "Caramel", "prix": 0.2, "quantite": 3 }
+    ]
+  }
+  

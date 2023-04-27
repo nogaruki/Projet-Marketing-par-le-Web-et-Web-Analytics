@@ -1,0 +1,32 @@
+[
+    {
+      "id": "client1",
+      "produits": [
+        { "id": "Tagada", "nom": "Tagada", "prix": 0.5, "quantite": 2 },
+        { "id": "Banane", "nom": "Banane", "prix": 0.2, "quantite": 3 }
+      ]
+    },
+    {
+      "id": "client2",
+      "produits": [
+        { "id": "Tagada", "nom": "Tagada", "prix": 0.5, "quantite": 1 },
+        { "id": "Caramel", "nom": "Caramel", "prix": 0.2, "quantite": 5 },
+        { "id": "Dragibus", "nom": "Dragibus", "prix": 1.5, "quantite": 2 }
+      ]
+    },
+    {
+      "id": "client3",
+      "produits": [
+        { "id": "Banane", "nom": "Banane", "prix": 0.2, "quantite": 4 },
+        { "id": "Dragibus", "nom": "Dragibus", "prix": 1.5, "quantite": 3 }
+      ]
+    },
+    {
+        "id": "client4",
+        "produits": [
+          { "id": "Schtroumpf", "nom": "Schtroumpf", "prix": 0.2, "quantite": 4 },
+          { "id": "Banane", "nom": "Banane", "prix": 0.2, "quantite": 4 }
+        ]
+      }
+]
+  
