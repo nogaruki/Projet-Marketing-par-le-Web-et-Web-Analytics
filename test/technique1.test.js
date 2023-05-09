@@ -8,6 +8,8 @@ describe('recommanderProduitsSimilaires', () => {
     test('recommande des produits similaires', () => {
       const produitsRecommandes = recommanderProduitsSimilaires(historiqueAchats, commandeActuelle);
       expect(produitsRecommandes).toEqual(['Banane', 'Dragibus']);
+        // on affiche les produits recommandés
+        console.log("Les recommandations sont :", produitsRecommandes);
     });
   
     test('ne recommande pas de produits déjà dans la commande actuelle', () => {

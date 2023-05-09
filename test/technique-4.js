@@ -12,10 +12,12 @@ function recommanderProduitsSimilaires(bonbon) {
             + (_.isEqual(bonbon.texture, autreBonbon.texture) ? 1 : 0)
             + (_.isEqual(bonbon.forme, autreBonbon.forme) ? 1 : 0);
         return similarite //>= 2; // on conserve les bonbons ayant au moins deux caractéristiques similaires
+        //console.log("bonbonsSimilaires : ", bonbonsSimilaires + "similarite : ", similarite);
     });
 
     // On trie les bonbons par ordre décroissant de nombre de caractéristiques similaires
     const bonbonsRecommandes = _.orderBy(bonbonsSimilaires, 'similarite', 'desc');
+    //console.log("bonbonsRecommandes", bonbonsRecommandes);
 
     // On retire le bonbon donné de la liste des recommandations
     return _.differenceBy(bonbonsRecommandes, [bonbon], 'id');

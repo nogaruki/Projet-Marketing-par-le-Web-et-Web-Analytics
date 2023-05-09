@@ -2,7 +2,6 @@ const _ = require('lodash');
 
 // Les données d'historique d'achats des clients et de la commande actuelle du client
 
-
 // Fonction de recommandation content-based
 function recommanderProduitsSimilaires(historiqueAchats, commandeActuelle) {
   // On filtre les clients qui ont acheté des produits similaires à ceux dans la commande actuelle
@@ -30,9 +29,11 @@ function recommanderProduitsSimilaires(historiqueAchats, commandeActuelle) {
       if (!produitExiste) {
         produitsRecommandes.push(produit);
       }
+
     }
 
     return produitsRecommandes;
+    //console.log("produitsSimilaires", produitsSimilaires)
   });
 
   // On compte le nombre d'occurrences de chaque produit
@@ -45,6 +46,7 @@ function recommanderProduitsSimilaires(historiqueAchats, commandeActuelle) {
 
   // On retire les produits déjà présents dans la commande actuelle
   return _.difference(produitsRecommandes, _.map(commandeActuelle.produits, 'id'));
+
 }
 
 module.exports = recommanderProduitsSimilaires;
