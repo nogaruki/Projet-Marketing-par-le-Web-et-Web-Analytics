@@ -1,0 +1,14 @@
+{
+  "name": "@nodeart/seo-text-component",
+  "version": "2.1.56",
+  "description": "Seo text component display seo text block of specific url",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nodeart/dal": "2.1.56"
+  }
+}
