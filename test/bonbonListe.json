@@ -1,0 +1,5 @@
+[
+  { "id": 1, "nom": "Bonbon A", "gout": "fraise", "texture": "mou", "couleur": "rose", "forme": "rond" },
+  { "id": 2, "nom": "Bonbon B", "gout": "citron", "texture": "dur", "couleur": "jaune", "forme": "carré" },
+  { "id": 3, "nom": "Bonbon C", "gout": "pomme", "texture": "mou", "couleur": "vert", "forme": "rond" }
+]
