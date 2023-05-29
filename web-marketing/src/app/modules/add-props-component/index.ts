@@ -1,1 +1,0 @@
-export { AddPropsModule } from './src/add-props.module';
