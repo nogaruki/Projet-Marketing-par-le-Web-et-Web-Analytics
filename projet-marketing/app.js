@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
     res.render('pages/index');
 })
-cd
+
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/views/pages/404.ejs');
 })
