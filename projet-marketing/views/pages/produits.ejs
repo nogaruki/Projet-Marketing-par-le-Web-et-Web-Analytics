@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des produits</title>
+</head>
+<body>
+<h1>Liste des produits</h1>
+<% produits.forEach(function(produit) { %>
+    <div>
+        <h2><%= produit.nom %></h2>
+        <p><%= produit.description %></p>
+        <p><%= produit.prix %></p>
+        <!-- Ajouter d'autres informations ou styles selon vos besoins -->
+    </div>
+<% }); %>
+</body>
+</html>
