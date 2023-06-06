@@ -5,7 +5,7 @@ const app = express();
 const port = 3000;
 const mongoose = require('mongoose');
 
-const connectionString = 'mongodb://localhost:27017/bonbon';
+const connectionString = "mongodb+srv://johann:ibGjwEwAcwYHA1TN@clusterbonbon.5ui3sc8.mongodb.net/\n";
 const collectionName = 'produits'; // Nom de la collection des bonbons
 
 // Connectez-vous à votre base de données MongoDB
@@ -36,6 +36,7 @@ app.get('/produits', (req, res) => {
             console.error('Erreur lors de la récupération des produits :', err);
         });
 });
+
 
 app.use((req, res) => {
     res.status(404).sendFile(__dirname + '/views/pages/404.ejs');
