@@ -72,7 +72,22 @@ app.get('/produits', (req, res) => {
     Candy.find({})
         .then((produits) => {
             console.log('Produits récupérés :', produits);
-            res.render('pages/produits', { produits: produits, panier: req.session.panier});
+            res.render('pages/produits', { produits: produits, panier: req.session.panier, user: req.session.user});
+        })
+        .catch((err) => {
+            console.error('Erreur lors de la récupération des produits :', err);
+        });
+});
+
+app.get('/produits/:texture', (req, res) => {
+    const texture = req.params.texture;
+    Candy.find({'texture': texture})
+        .then((produits) => {
+            if(produits.length !== 0){
+                res.render('pages/produits', { produits: produits, panier: req.session.panier, user: req.session.user});
+            }else{
+                res.status(404).render('pages/404');
+            }
         })
         .catch((err) => {
             console.error('Erreur lors de la récupération des produits :', err);
@@ -89,7 +104,7 @@ app.get('/produit/:productId', (req, res) => {
        res.render('pages/detailProduit', { product, addedPannier, panier: req.session.panier, user: req.session.user });
    }).catch((err) => {
          console.error('Erreur lors de la récupération du produit :', err);
-         res.status(404).send('Not found');
+       res.status(404).render('pages/404');
    });
 });
 app.get('/panier', (req, res) => {
@@ -129,7 +144,7 @@ app.post('/login', urlencodedParser, (req, res) => {
         }
     }).catch((err) => {
         console.error('Erreur lors de la récupération du produit :', err);
-        res.status(404).send('Not found');
+        res.status(404).render('pages/404');
     });
 });
 
@@ -188,7 +203,7 @@ app.post('/profile', urlencodedParser, (req, res) => {
         });
     }).catch((err) => {
         console.error('Erreur lors de la récupération du produit :', err);
-        res.status(404).send('Not found');
+        res.status(404).render('pages/404');
     });
 
 });
@@ -216,7 +231,7 @@ app.post("/panier", urlencodedParser, (req, res) => {
 
     }).catch((err) => {
         console.error('Erreur lors de la récupération du produit :', err);
-        res.status(404).send('Not found');
+        res.status(404).render('pages/404');
     }).then(() => {
         res.redirect(req.get('referer'));
     });

@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des produits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h1>Liste des produits</h1>
-<% produits.forEach(function(produit) { %>
-    <div>
-        <h2><%= produit.nom %></h2>
-        <p><%= produit.description %></p>
-        <p><%= produit.prix %></p>
-        <!-- Ajouter d'autres informations ou styles selon vos besoins -->
+<body class="bg-gray-100">
+<%- include('../components/navbar'); -%>
+<div>
+    <div class="px-32 py-20 grid grid-cols-4  gap-10">
+        <% produits.forEach(function(produit) { %>
+        <a href="/produit/<%- produit.id%>">
+            <div class="bg-white max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-105 transition duration-500 cursor-pointer">
+                <div>
+                    <img src="<%= produit.image %>" alt="" />
+                </div>
+                <div class="py-4 px-4">
+                    <h3 class="text-lg font-bold text-gray-600"><h2><%= produit.nom %></h2></h3>
+                    <p class="mt-4 text-sm font-thin"><%= produit.description %></p>
+                </div>
+            </div>
+        </a>
+        <% }); %>
     </div>
-<% }); %>
+</div>
+<%- include('../components/footer'); -%>
 </body>
+<style>
+    img{
+        width: 100%;
+        aspect-ratio: 3/2;
+        object-fit: contain;
+    }
+</style>
 </html>
