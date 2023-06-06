@@ -107,7 +107,7 @@ app.get('/profile', (req, res) => {
     if(req.session.user === undefined){
         res.redirect('/');
     }
-    res.render('pages/profile', {user: req.session.user, error: undefined, success: undefined});
+    res.render('pages/profile', {user: req.session.user, error: undefined, success: undefined, panier: req.session.panier});
 });
 
 // **** ROUTES POST **** //
@@ -159,14 +159,16 @@ app.post('/profile', urlencodedParser, (req, res) => {
                     res.render('pages/profile', {
                         error: 'Les mots de passe ne sont pas identiques',
                         success: undefined,
-                        user: req.session.user
+                        user: req.session.user,
+                        panier: req.session.panier
                     });
                 }
             } else {
                 res.render('pages/profile', {
                     error: 'L\'ancien mot de passe est incorrect',
                     success: undefined,
-                    user: req.session.user
+                    user: req.session.user,
+                    panier: req.session.panier
                 });
             }
 
@@ -181,7 +183,8 @@ app.post('/profile', urlencodedParser, (req, res) => {
         res.render('pages/profile', {
             user: req.session.user,
             error: undefined,
-            success: 'Les modifications ont bien été prises en compte'
+            success: 'Les modifications ont bien été prises en compte',
+            panier: req.session.panier
         });
     }).catch((err) => {
         console.error('Erreur lors de la récupération du produit :', err);
