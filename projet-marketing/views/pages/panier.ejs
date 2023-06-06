@@ -19,10 +19,10 @@
 <%if(panier.length !== 0){ let total = 0;%>
 <%- include('../components/navbar'); -%>
 <div class="h-screen bg-gray-100 pt-20">
-    <h1 class="mb-10 text-center text-2xl font-bold">Cart Items</h1>
+    <h1 class="mb-10 text-center text-2xl font-bold">Mon panier</h1>
     <div class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div class="rounded-lg md:w-2/3">
-            <%for(let i = 0; i < panier.length; i++) { total += panier[i].bonbon.prix;%>
+            <%for(let i = 0; i < panier.length; i++) { total += panier[i].bonbon.prix * panier[i].quantity;%>
             <div id="product-<%- i%>" class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
                 <img src="<%- panier[i].bonbon.image %>" alt="product-image" class="w-full rounded-lg sm:w-40" />
                 <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
@@ -65,7 +65,9 @@
                     <p class="text-sm text-gray-700">TAV incluse</p>
                 </div>
             </div>
-            <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+            <form action="/order" method="POST">
+                <button type="submit" class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Finaliser</button>
+            </form>
         </div>
     </div>
 </div>
@@ -133,7 +135,7 @@
                 let balises = document.querySelectorAll('[id^="product-"]');
                 if(balises.length === 0) {
                     document.querySelector("body").innerHTML = `
-                        <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+                        <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
                         <div class="text-center">
                             <p class="text-base font-semibold text-indigo-600">Pas de produit</p>
                             <p class="mt-6 text-base leading-7 text-gray-600">Veuillez ajouter un produit au panier</p>
@@ -150,7 +152,7 @@
 </script>
 <%- include('../components/footer'); -%>
 <%} else{ %>
-    <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
+    <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">
         <div class="text-center">
             <p class="text-base font-semibold text-indigo-600">Pas de produit</p>
             <p class="mt-6 text-base leading-7 text-gray-600">Veuillez ajouter un produit au panier</p>

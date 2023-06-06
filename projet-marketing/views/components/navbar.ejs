@@ -21,6 +21,10 @@
                     <div class="flex space-x-4">
                         <a href="/" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Accueil</a>
                         <a href="/produits" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Produits</a>
+                        <%if(user){%>
+                            <a href="/commandes" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mes commandes</a>
+                            <a href="/logout" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</a>
+                        <%}%>
                     </div>
                 </div>
             </div>

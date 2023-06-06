@@ -16,10 +16,10 @@ const commandeSchema = new Schema({
         ref: 'Candy',
         required: true
     }],
-    quantite: {
+    quantite: [{
         type: Number,
         required: true
-    },
+    }],
     prix: {
         type: Number,
         required: true

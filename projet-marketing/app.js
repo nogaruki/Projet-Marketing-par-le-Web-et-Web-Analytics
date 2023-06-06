@@ -22,26 +22,6 @@ mongoose.connect(connectionString, {
 })
     .then(() => {
         console.log('Connecté à MongoDB');
-        // Commande.find({})
-        //     .populate('idUser')
-        //     .populate('idBonbon')
-        //     .then((commandes) => {
-        //         console.log('Commandes récupérées :');
-        //         for (const commande of commandes) {
-        //             console.log('User',commande.idUser);
-        //             console.log('Produits for i');
-        //             for(let i =0; i < commande.idBonbon.length; i++){
-        //                 console.log(commande.idBonbon[i]);
-        //             }
-        //             console.log('Produits for obj');
-        //             for(const bonbon of commande.idBonbon){
-        //                 console.log(bonbon);
-        //             }
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error('Erreur lors de la recherche des commandes :', error);
-        //     });
     })
     .catch(err => {
         console.error('Erreur de connexion à MongoDB', err);
@@ -52,7 +32,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.set('view engine', 'ejs');
 app.use(cookieParser());
-// Configuration de express-session
+// Configuration d'express-session
 app.use(
     session({
         secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
@@ -71,14 +51,12 @@ app.get('/', (req, res) => {
 app.get('/produits', (req, res) => {
     Candy.find({})
         .then((produits) => {
-            console.log('Produits récupérés :', produits);
             res.render('pages/produits', { produits: produits, panier: req.session.panier, user: req.session.user});
         })
         .catch((err) => {
             console.error('Erreur lors de la récupération des produits :', err);
         });
 });
-
 app.get('/produits/:texture', (req, res) => {
     const texture = req.params.texture;
     Candy.find({'texture': texture})
@@ -117,14 +95,43 @@ app.get('/login', (req, res) => {
     }
     res.render('pages/login', {error: undefined});
 });
+app.get('/logout', (req, res) => {
+    req.session.user = undefined;
+    res.redirect('/');
+});
 
+app.get('/commandes', (req, res) => {
+    if(req.session.user !== undefined){
+        Commande.find({idUser: req.session.user._id}).then((commandes) => {
+            res.render('pages/commandes', {user: req.session.user, panier: req.session.panier, commandes: commandes});
+        }).catch((err) => {
+            console.error('Erreur lors de la récupération des commandes :', err);
+        });
+    } else {
+        res.status(404).render('pages/404');
+    }
+});
+app.get('/commande/:idCommande', (req, res) => {
+    const idCommande = req.params.idCommande;
+    Commande.findOne({id: idCommande}).populate('idUser').populate('idBonbon').then((commande) => {
+        if(commande === null){
+            res.status(404).render('pages/404');
+        }else{
+            res.render('pages/commande', {user: req.session.user, panier: req.session.panier, commande: commande});
+        }
+    }).catch((err) => {
+        console.error('Erreur lors de la récupération de la commande :', err);
+    });
+});
 app.get('/profile', (req, res) => {
     if(req.session.user === undefined){
         res.redirect('/');
     }
     res.render('pages/profile', {user: req.session.user, error: undefined, success: undefined, panier: req.session.panier});
 });
-
+app.get('/remerciement', (req, res) => {
+    res.render('pages/remerciement');
+});
 // **** ROUTES POST **** //
 app.post('/login', urlencodedParser, (req, res) => {
     // Récupérer les détails du produit depuis votre base de données
@@ -147,7 +154,6 @@ app.post('/login', urlencodedParser, (req, res) => {
         res.status(404).render('pages/404');
     });
 });
-
 app.post('/profile', urlencodedParser, (req, res) => {
 
     let localUser = req.session.user;
@@ -250,11 +256,55 @@ app.post("/panier/edit/:panierpos", jsonParser, (req, res) => {
     }
     let total = 0;
     for(let i = 0; i < panier.length; i++){
-        total += panier[i].quantity * panier[i].bonbon.prix;
+        total += (panier[i].quantity * panier[i].bonbon.prix).toFixed(2);
     }
+    total = total.toString().replace(/^0+/, '');
     res.send({total: total});
 });
+app.post("/order", urlencodedParser, (req, res) => {
+    const panier = req.session.panier || [];
+    const user = req.session.user;
+    if(panier.length === 0){
+        res.redirect('/');
+    }
+    if(user === undefined){
+        res.redirect('/login');
+    }
+    let bonbons = [];
+    let quantite = [];
 
+    let total = 0;
+    for(let i = 0; i < panier.length; i++){
+        total += (panier[i].quantity * panier[i].bonbon.prix.toFixed(2));
+        bonbons.push(panier[i].bonbon._id);
+        quantite.push(panier[i].quantity);
+    }
+    total = total.toString().replace(/^0+/, '');
+    let totalcommande = Commande.countDocuments({}).then((count) => {
+        let commande = new Commande({
+            id: count+1,
+            idUser: user._id,
+            idBonbon: bonbons,
+            quantite: quantite,
+            prix: total,
+            date: new Date(),
+            statut: 'En cours'
+        });
+
+
+        commande.save().then(() => {
+            req.session.panier = [];
+            res.redirect('/remerciement');
+        }).catch((err) => {
+            console.error('Erreur lors de la récupération du produit :', err);
+            res.status(404).render('pages/404');
+        });
+    });
+
+
+});
+
+// **** ROUTES DELETE **** //
 app.delete("/panier/delete/:panierpos", jsonParser, (req, res) => {
     const panierpos = req.params.panierpos
     let panier = req.session.panier || [];
@@ -265,8 +315,9 @@ app.delete("/panier/delete/:panierpos", jsonParser, (req, res) => {
     }
     let total = 0;
     for(let i = 0; i < panier.length; i++){
-        total += panier[i].quantity * panier[i].bonbon.prix;
+        total += (panier[i].quantity * panier[i].bonbon.prix).toFixed(2);
     }
+    total = total.toString().replace(/^0+/, '');
     res.send({total: total});
 });
 app.use((req, res) => {
