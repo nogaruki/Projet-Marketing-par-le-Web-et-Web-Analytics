@@ -1,5 +1,8 @@
 const express = require('express');
 const Candy = require('./models/candy');
+const User = require('./models/user');
+const Commande = require('./models/commande');
+
 const {join} = require("path");
 const app = express();
 const port = 3000;
@@ -15,6 +18,26 @@ mongoose.connect(connectionString, {
 })
     .then(() => {
         console.log('Connecté à MongoDB');
+        // Commande.find({})
+        //     .populate('idUser')
+        //     .populate('idBonbon')
+        //     .then((commandes) => {
+        //         console.log('Commandes récupérées :');
+        //         for (const commande of commandes) {
+        //             console.log('User',commande.idUser);
+        //             console.log('Produits for i');
+        //             for(let i =0; i < commande.idBonbon.length; i++){
+        //                 console.log(commande.idBonbon[i]);
+        //             }
+        //             console.log('Produits for obj');
+        //             for(const bonbon of commande.idBonbon){
+        //                 console.log(bonbon);
+        //             }
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.error('Erreur lors de la recherche des commandes :', error);
+        //     });
     })
     .catch(err => {
         console.error('Erreur de connexion à MongoDB', err);
@@ -27,6 +50,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/produits', (req, res) => {
+
     Candy.find({})
         .then((produits) => {
             console.log('Produits récupérés :', produits);
