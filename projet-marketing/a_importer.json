@@ -1,0 +1,97 @@
+[{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec230"
+  },
+  "id": 1,
+  "nom": "Oursons ",
+  "gout": "Fruit",
+  "couleur": "Multicolore",
+  "texture": "Mou",
+  "forme": "Ourson",
+  "prix": 2.99,
+  "description": "Les oursons d'or Haribo sont des bonbons gélifiés en forme d'ourson. Ils sont connus pour leur goût fruité et leur texture mâchouillable. Ces bonbons sont très appréciés par les enfants et les adultes."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec231"
+  },
+  "id": 2,
+  "nom": "Skittles",
+  "gout": "Fruit",
+  "couleur": "Multicolore",
+  "texture": "Dur",
+  "forme": "Rond",
+  "prix": 1.49,
+  "description": "Les Skittles sont de petits bonbons ronds et colorés. Ils sont disponibles dans une variété de goûts fruités, et chaque bonbon a une coque dure avec un intérieur doux. Les Skittles offrent une expérience gustative amusante et colorée."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec232"
+  },
+  "id": 3,
+  "nom": "M&M's",
+  "gout": "Chocolat",
+  "couleur": "Multicolore",
+  "texture": "Dur",
+  "forme": "Rond",
+  "prix": 1.99,
+  "description": "Les M&M's sont des bonbons enrobés de chocolat avec un intérieur croustillant. Ils sont connus pour leur forme ronde et leur coquille colorée. Les M&M's sont disponibles dans différentes saveurs et couleurs, offrant une délicieuse combinaison de chocolat et de croquant."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec233"
+  },
+  "id": 4,
+  "nom": "Dragibus",
+  "gout": "Multi",
+  "couleur": "Multicolore",
+  "texture": "Dur",
+  "forme": "Rond",
+  "prix": 2.49,
+  "description": "Les dragibus sont des bonbons gélifiés en forme de petites billes. Ils sont célèbres pour leurs couleurs vives et leur goût sucré. Les dragibus sont disponibles dans différentes couleurs et saveurs, offrant une explosion de plaisir dans chaque bouchée."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec234"
+  },
+  "id": 5,
+  "nom": "Fraise Tagada",
+  "gout": "Fraise",
+  "couleur": "Rouge",
+  "texture": "Mou",
+  "forme": "Rond",
+  "prix": 3.49,
+  "description": "La fraise Tagada est un bonbon gélifié en forme de fraise. Il est connu pour son goût sucré et sa texture douce. Les fraises Tagada sont souvent de couleur rose et sont très appréciées par les amateurs de bonbons à la fraise."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec235"
+  },
+  "id": 6,
+  "nom": "Banane Tagada",
+  "gout": "Banane",
+  "couleur": "Jaune",
+  "texture": "Mou",
+  "forme": "Long",
+  "prix": 1.99,
+  "description": "La banane Tagada est un bonbon gélifié en forme de banane. Il offre un goût sucré et une texture moelleuse. Les bonbons à la banane Tagada sont souvent de couleur jaune et offrent une expérience gustative unique pour les amateurs de bonbons à la banane."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec236"
+  },
+  "id": 7,
+  "nom": "Snickers",
+  "gout": "Chocolat",
+  "couleur": "Marron",
+  "texture": "Dur",
+  "forme": "Barre",
+  "prix": 1.49,
+  "description": "Le Snickers est une barre chocolatée populaire composée d'un mélange de caramel, de cacahuètes et de nougat enrobé de chocolat au lait. Il offre une combinaison délicieuse de saveurs sucrées et salées, ce qui en fait l'un des bonbons préférés des amateurs de chocolat."
+},{
+  "_id": {
+    "$oid": "647dd1eb174dae4880aec237"
+  },
+  "id": 8,
+  "nom": "Twix",
+  "gout": "Chocolat",
+  "couleur": "Marron",
+  "texture": "Dur",
+  "forme": "Barre",
+  "prix": 0.79,
+  "description": "Le Twix est une barre chocolatée composée d'un biscuit croustillant recouvert de caramel et enrobé de chocolat au lait. Il offre une texture croquante et une combinaison irrésistible de saveurs sucrées et chocolatées."
+}]
