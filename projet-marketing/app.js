@@ -7,6 +7,7 @@ const Candy = require('./models/candy');
 const User = require('./models/user');
 const Commande = require('./models/commande');
 const recommanderBonbonsPopulaires = require('./recommandations/technique-3');
+const recommanderProduitsSimilaires = require('./recommandations/technique-1');
 
 const {join} = require("path");
 const app = express();
@@ -47,9 +48,13 @@ app.get('/', (req, res) => {
         const commandeActuelle = { produits: req.session.panier || [] }; // Utilisez les bonbons présents dans le panier comme commande actuelle
         console.log(commandeActuelle);
         Commande.find({}).then((commandes) => {
-            const historiqueAchats = commandes.map((commande) => commande.idBonbon); // Obtenez les bonbons de toutes les commandes dans l'historique
+            const historiqueAchats = commandes.map((commande) => commande.idBonbon);
+            const historiqueAchatsSimilaire = commandes.map((commande) => commande.idBonbon.map((bonbon) => bonbon._id));
 
             const recommandationsIds = recommanderBonbonsPopulaires(historiqueAchats, commandeActuelle);
+            const recommandationSimilaire = recommanderProduitsSimilaires(historiqueAchatsSimilaire, commandeActuelle);
+
+            //console.log(recommandationSimilaire);
 
             Candy.find({ _id: { $in: recommandationsIds } }).sort({$natural:1}).then((recommandations) => {
                 // Tri manuel des recommandations dans le même ordre que recommandationsIds
@@ -58,11 +63,17 @@ app.get('/', (req, res) => {
                 });
                 //console.log(recommandationsTriees);
 
-                res.render('pages/index', {
-                    panier: req.session.panier,
-                    bonbons: bonbons,
-                    user: req.session.user,
-                    recommandations: recommandationsTriees
+                Candy.find({ _id: { $in: recommandationSimilaire } }).then((recommandationsSimilaires) => {
+                    res.render('pages/index', {
+                        panier: req.session.panier,
+                        bonbons: bonbons,
+                        user: req.session.user,
+                        recommandations: recommandationsTriees,
+                        recommandationSimilaire: recommandationsSimilaires
+                    });
+                }).catch((err) => {
+                    console.error('Erreur lors de la récupération des recommandations similaires :', err);
+                    // Gérez l'erreur selon vos besoins
                 });
             }).catch((err) => {
                 console.error('Erreur lors de la récupération des recommandations :', err);

@@ -10,11 +10,11 @@ function recommanderBonbonsPopulaires(historiqueAchats, commandeActuelle) {
 
     // On trie les produits par ordre décroissant de nombre d'occurrences
     const produitsPopulaires = _.orderBy(_.keys(produitsComptes), produit => produitsComptes[produit], 'desc');
-    console.log("recommandation avant", produitsPopulaires);
+    //console.log("recommandation avant", produitsPopulaires);
     // On retire les produits déjà présents dans la commande actuelle
     const recommandations = _.difference(produitsPopulaires, commandeActuelle.produits.map(produit => produit.bonbon._id.toString()));
-    console.log("recommandation apres", recommandations);
-    
+    //console.log("recommandation apres", recommandations);
+
     return recommandations;
 }
 

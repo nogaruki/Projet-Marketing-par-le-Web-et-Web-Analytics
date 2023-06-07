@@ -31,6 +31,27 @@
                     </div>
                 <% } %>
             </div>
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">En fonction de votre panier</h2>
+            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                <% for (let j = 0; j < recommandationSimilaire.length; j++) { %>
+                    <div class="group relative">
+                        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <img src="<%- recommandationSimilaire[j].image %>" alt="<%- recommandationSimilaire[j].nom %>" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <div>
+                                <h3 class="text-sm text-gray-700">
+                                    <a href="/produit/<%- recommandationSimilaire[j].id %>">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        <%- recommandationSimilaire[j].nom %>
+                                    </a>
+                                </h3>
+                            </div>
+                            <p class="text-sm font-medium text-gray-900"><%- recommandationSimilaire[j].prix %> €</p>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
         </div>
     </div>
     <div>
@@ -40,7 +61,7 @@
                 <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
                     <div class="group relative">
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-                            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="h-full w-full object-cover object-center">
+                            <img src="https://cdn.shopify.com/s/files/1/0695/1672/2493/products/BannerLokum-TurkishDelightShopAphaeaBazaar_2_53970beb-4998-46a6-83ff-7e8b0e0ccdc0.jpg?v=1675245768&width=1946" alt="Desk with leather desk pad, walnut desk organizer, wireless keyboard and mouse, and porcelain mug." class="h-full w-full object-cover object-center">
                         </div>
                         <h3 class="mt-6 text-sm text-gray-500">
                             <a href="/produits/Molle">
@@ -52,7 +73,7 @@
                     </div>
                     <div class="group relative">
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-                            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-02.jpg" alt="Bonbons dure" class="h-full w-full object-cover object-center">
+                            <img src="https://m.media-amazon.com/images/I/91ChIRBJl7L._AC_UF1000,1000_QL80_.jpg" alt="Bonbons dure" class="h-full w-full object-cover object-center">
                         </div>
                         <h3 class="mt-6 text-sm text-gray-500">
                             <a href="/produits/Dure">
@@ -64,7 +85,7 @@
                     </div>
                     <div class="group relative">
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
-                            <img src="https://cdn.shopify.com/s/files/1/0695/1672/2493/products/BannerLokum-TurkishDelightShopAphaeaBazaar_2_53970beb-4998-46a6-83ff-7e8b0e0ccdc0.jpg?v=1675245768&width=1946" alt="Bonbons  croquant" class="h-full w-full object-cover object-center">
+                            <img src="https://cdn.media.amplience.net/i/marsmmsprod/ct1045_img_01_1000110874_4010001278_4010001279?%24i%24=&w=992" alt="Bonbons  croquant" class="h-full w-full object-cover object-center">
                         </div>
                         <h3 class="mt-6 text-sm text-gray-500">
                             <a href="/produits/Croquant">
