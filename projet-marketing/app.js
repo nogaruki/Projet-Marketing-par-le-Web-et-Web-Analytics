@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const Candy = require('./models/candy');
 const User = require('./models/user');
 const Commande = require('./models/commande');
+const recommanderBonbonsPopulaires = require('./recommandations/technique-3');
 
 const {join} = require("path");
 const app = express();
@@ -13,7 +14,6 @@ const port = 3000;
 const mongoose = require('mongoose');
 
 const connectionString = "mongodb+srv://johann:ibGjwEwAcwYHA1TN@clusterbonbon.5ui3sc8.mongodb.net/\n";
-const collectionName = 'produits'; // Nom de la collection des bonbons
 
 // Connectez-vous à votre base de données MongoDB
 mongoose.connect(connectionString, {
@@ -44,7 +44,37 @@ app.use(
 // **** ROUTES GET **** //
 app.get('/', (req, res) => {
     Candy.find({}).then((bonbons) => {
-        res.render('pages/index', { panier: req.session.panier, bonbons: bonbons, user: req.session.user });
+        const commandeActuelle = { produits: req.session.panier || [] }; // Utilisez les bonbons présents dans le panier comme commande actuelle
+        console.log(commandeActuelle);
+        Commande.find({}).then((commandes) => {
+            const historiqueAchats = commandes.map((commande) => commande.idBonbon); // Obtenez les bonbons de toutes les commandes dans l'historique
+
+            const recommandationsIds = recommanderBonbonsPopulaires(historiqueAchats, commandeActuelle);
+
+            Candy.find({ _id: { $in: recommandationsIds } }).sort({$natural:1}).then((recommandations) => {
+                // Tri manuel des recommandations dans le même ordre que recommandationsIds
+                const recommandationsTriees = recommandationsIds.map((id) => {
+                    return recommandations.find((recommandation) => String(recommandation._id) === String(id));
+                });
+                //console.log(recommandationsTriees);
+
+                res.render('pages/index', {
+                    panier: req.session.panier,
+                    bonbons: bonbons,
+                    user: req.session.user,
+                    recommandations: recommandationsTriees
+                });
+            }).catch((err) => {
+                console.error('Erreur lors de la récupération des recommandations :', err);
+                // Gérez l'erreur selon vos besoins
+            });
+        }).catch((err) => {
+            console.error('Erreur lors de la récupération de l\'historique des achats :', err);
+            // Gérez l'erreur selon vos besoins
+        });
+    }).catch((err) => {
+        console.error('Erreur lors de la récupération des bonbons :', err);
+        // Gérez l'erreur selon vos besoins
     });
 });
 
