@@ -47,7 +47,7 @@ function recommanderProduitsSimilaires(historiqueAchatsSimilaire, commandeActuel
     }, 'desc');
 
     //const reco =  _.difference(produitsRecommandes, _.map(commandeActuelle.produits, '_id'));
-  const reco = _.difference(produitsRecommandes, commandeActuelle.produits.map(produit => produit.bonbon._id.toString()));
+  const reco = _.difference(produitsRecommandes.slice(0, 4), commandeActuelle.produits.map(produit => produit.bonbon._id.toString()));
   //console.log("recommandation", reco.length);
     return reco;
   }

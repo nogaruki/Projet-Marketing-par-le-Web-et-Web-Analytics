@@ -10,7 +10,7 @@
     <%- include('../components/navbar'); -%>
     <div>
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Nos produits populaire</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-gray-900">Nos produits populaires</h2>
             <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                 <% for (let j = 0; j < 4; j++) { %>
                     <div class="group relative">
@@ -31,33 +31,14 @@
                     </div>
                 <% } %>
             </div>
-            <h2 class="text-2xl font-bold tracking-tight text-gray-900">En fonction de votre panier</h2>
-            <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                <% for (let j = 0; j < recommandationSimilaire.length; j++) { %>
-                    <div class="group relative">
-                        <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                            <img src="<%- recommandationSimilaire[j].image %>" alt="<%- recommandationSimilaire[j].nom %>" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <div>
-                                <h3 class="text-sm text-gray-700">
-                                    <a href="/produit/<%- recommandationSimilaire[j].id %>">
-                                        <span aria-hidden="true" class="absolute inset-0"></span>
-                                        <%- recommandationSimilaire[j].nom %>
-                                    </a>
-                                </h3>
-                            </div>
-                            <p class="text-sm font-medium text-gray-900"><%- recommandationSimilaire[j].prix %> €</p>
-                        </div>
-                    </div>
-                <% } %>
+
             </div>
         </div>
     </div>
     <div>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
-                <h2 class="text-2xl font-bold text-gray-900">Bonbon par textures</h2>
+                <h2 class="text-2xl font-bold text-gray-900">Bonbons par textures</h2>
                 <div class="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
                     <div class="group relative">
                         <div class="relative h-80 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
