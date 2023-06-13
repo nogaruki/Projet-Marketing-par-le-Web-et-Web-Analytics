@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<%- include('../components/navbar'); -%>
+<div>
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">Produits populaires actuel</h2>
+        <table class="table-auto">
+            <thead>
+            <tr>
+                <th>Place</th>
+                <th>Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let i = 0; i < recommandations.length; i++) { %>
+                <tr>
+                <td>n° <%- i %></td>
+                <td><a href="/produit/<%- recommandations[i].id %>" target="_blank" > <%- recommandations[i].nom %></a></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-6">Graphiques</h2>
+        <div class="grid grid-cols-3 gap-4">
+            <div>
+                <h3 class="font-bold tracking-tight text-gray-900">Commande par jour</h3>
+                <canvas id="commandeChart" width="400" height="400"></canvas>
+            </div>
+
+        </div>
+        <div>
+            <h3 class="font-bold tracking-tight text-gray-900">Bonbon vendu par jour<sub class="italic font-light">Cliquer sur une noeu pour afficher la liste de bonbon</sub></h3>
+
+            <canvas id="bonbonDayChart" width="400" height="100"></canvas>
+        </div>
+        <div class="mt-6">
+            <h3 class="font-bold tracking-tight text-gray-900">Bonbon vendu au total</h3>
+            <canvas id="bonbonChart" width="400" height="100" ></canvas>
+        </div>
+
+    </div>
+</div>
+<%- include('../components/footer'); -%>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="/chart.js"></script>
+</body>
+</html>
