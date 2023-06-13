@@ -1,7 +1,9 @@
 let bonbonChartElement = document.getElementById('bonbonChart');
 let bonbonDayChartElement = document.getElementById('bonbonDayChart');
 let commandeChartElement = document.getElementById('commandeChart');
+let bonbonUserChartElement = document.getElementById('bonbonUserChart');
 let selectUserElement = document.getElementById('selectUser');
+let bonbonChart = null;
 fetch("/getCommandeBonBon", {
     method: 'GET',
     headers: {
@@ -42,7 +44,6 @@ fetch("/getBonbonVendu", {
 })
     .then(response => response.json())
     .then(bonbons => {
-        console.log(bonbons);
         const bonbonChart = new Chart(bonbonChartElement, {
             type: 'bar',
             data:  {
@@ -68,7 +69,8 @@ fetch("/getBonbonVenduParJour", {
     headers: {
         'Content-Type': 'application/json'
     }
-}).then(response => response.json())
+})
+    .then(response => response.json())
     .then(bonbons => {
         const bonbonChart = new Chart(bonbonDayChartElement, {
             type: 'line',
@@ -103,10 +105,14 @@ selectUserElement.onchange = (e) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(response => response.json())
+        })
+            .then(response => response.json())
             .then(bonbons => {
-                const bonbonChart = new Chart(bonbonDayChartElement, {
-                    type: 'line',
+                if(bonbonChart !== null) {
+                    bonbonChart.destroy();
+                }
+                bonbonChart = new Chart(bonbonUserChartElement, {
+                    type: 'bar',
                     data:  {
                         labels: bonbons.map(bonbon => bonbon.nom),
                         datasets: [{

@@ -327,8 +327,6 @@ app.get('/getBonbonVendu',(req, res) => {
                     nombre: nombre,
                 });
             }
-
-            console.log(data);
             res.json(data);
         });
     });
@@ -405,25 +403,27 @@ app.get('/getBonbonVenduParJour',(req, res) => {
     });
 });
 app.get('/getBonbonPerUser/:id',(req, res) => {
-    User.findOne({_id: req.params.id}).then((user) => {
+    User.findOne({id: req.params.id}).then((user) => {
         Commande.find({idUser: user._id}).populate('idUser').populate('idBonbon').then((commandes) => {
-            let data = [];
-            for(let commande of commandes) {
-                for(let bonbonCommande of commande.idBonbon) {
-                    let index = data.findIndex((element) => {
-                        return element.nom === bonbonCommande.nom;
-                    });
-                    if(index === -1) {
-                        data.push({
-                            nom: bonbonCommande.nom,
-                            nombre: 1,
-                        })
-                    } else {
-                        data[index].nombre++;
+            Candy.find({}).then((bonbons) => {
+                let data = [];
+                for (let bonbon of bonbons) {
+                    let nombre = 0;
+                    for (let commande of commandes) {
+                        for (let bonbonCommande of commande.idBonbon) {
+                            if (bonbonCommande.id === bonbon.id) {
+                                nombre++;
+                            }
+                        }
                     }
+                    data.push({
+                        nom: bonbon.nom,
+                        nombre: nombre,
+                    });
                 }
-            }
-            res.json(data);
+                console.log(data);
+                res.json(data);
+            });
         });
     });
 });
