@@ -1,6 +1,7 @@
 let bonbonChartElement = document.getElementById('bonbonChart');
 let bonbonDayChartElement = document.getElementById('bonbonDayChart');
 let commandeChartElement = document.getElementById('commandeChart');
+let selectUserElement = document.getElementById('selectUser');
 fetch("/getCommandeBonBon", {
     method: 'GET',
     headers: {
@@ -93,3 +94,34 @@ fetch("/getBonbonVenduParJour", {
             }
         });
     });
+
+selectUserElement.onchange = (e) => {
+    let id = e.target.value;
+    if(id !== -1) {
+        fetch(`/getBonbonPerUser/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(bonbons => {
+                const bonbonChart = new Chart(bonbonDayChartElement, {
+                    type: 'line',
+                    data:  {
+                        labels: bonbons.map(bonbon => bonbon.nom),
+                        datasets: [{
+                            label: 'Nombre de bonbons vendus',
+                            data: bonbons.map(bonbon => bonbon.nombre),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                            ],
+                            borderWidth: 1
+                        }]
+                    }
+                });
+            });
+    }
+}

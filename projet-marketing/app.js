@@ -247,12 +247,18 @@ app.get('/dashboard', (req, res) => {
                 //console.log(recommandationsTriees);
 
                 Candy.find({ _id: { $in: recommandationSimilaire } }).then((recommandationsSimilaires) => {
-                    res.render('pages/dashboard', {
-                        user: user,
-                        panier: req.session.panier,
-                        recommandations: recommandationsTriees,
-                        bonbons: bonbons,
-                        recommandationSimilaire: recommandationsSimilaires});
+                    User.find({}).then((users) => {
+                        res.render('pages/dashboard', {
+                            user: user,
+                            panier: req.session.panier,
+                            recommandations: recommandationsTriees,
+                            bonbons: bonbons,
+                            recommandationSimilaire: recommandationsSimilaires,
+                            users: users
+                        });
+                    }).catch((err) => {
+                        console.error('Erreur lors de la récupération des utilisateurs :', err);
+                    });
                 }).catch((err) => {
                     console.error('Erreur lors de la récupération des recommandations similaires :', err);
                     // Gérez l'erreur selon vos besoins
@@ -398,7 +404,29 @@ app.get('/getBonbonVenduParJour',(req, res) => {
         });
     });
 });
-
+app.get('/getBonbonPerUser/:id',(req, res) => {
+    User.findOne({_id: req.params.id}).then((user) => {
+        Commande.find({idUser: user._id}).populate('idUser').populate('idBonbon').then((commandes) => {
+            let data = [];
+            for(let commande of commandes) {
+                for(let bonbonCommande of commande.idBonbon) {
+                    let index = data.findIndex((element) => {
+                        return element.nom === bonbonCommande.nom;
+                    });
+                    if(index === -1) {
+                        data.push({
+                            nom: bonbonCommande.nom,
+                            nombre: 1,
+                        })
+                    } else {
+                        data[index].nombre++;
+                    }
+                }
+            }
+            res.json(data);
+        });
+    });
+});
 app.get('/chart.js',(req, res) => {
     res.sendFile(__dirname + '/js/chart.js');
 });
