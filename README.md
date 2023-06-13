@@ -30,7 +30,7 @@ Pour ce faire, nous allons utiliser comme base un site de vente de bonbons.
 Merci à Mr. Menez d'avoir proposé ce projet universitaire qui nous permet d'améliorer nos compétences de développement et d'en apprendre de nouvelle.
 ## Technologies utilisées
 
-**Client:** Angular, TailwindCSS
+**Client:** ejs, TailwindCSS
 
 **Server:** Node, Express
 
