@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<%- include('../components/navbar'); -%>
+<div>
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">Produits populaires actuel</h2>
+        <table class="w-3/6 text-sm text-left text-gray-700">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th>Place</th>
+                <th>Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let i = 0; i < recommandations.length; i++) { %>
+                <tr class="bg-white border-b">
+                <td>n° <%- i %></td>
+                <td><a href="/produit/<%- recommandations[i].id %>" target="_blank" > <%- recommandations[i].nom %></a></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-6">Graphiques</h2>
+    <div class="mt-6">
+        <h3 class="font-bold tracking-tight text-gray-900">Bonbon vendu pour chaque utilisateur</h3>
+        <select id="selectUser"class="mt-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/6 p-2.5">
+            <option value="-1"> ----- </option>
+            <%for(let user of users) {%>
+                <option value="<%-user.id%>"><%-user.nom%> - <%-user.prenom%> </option>
+            <%}%>
+        </select>
+        <canvas id="bonbonUserChart" width="400" height="100" ></canvas>
+    </div>
+        <div>
+            <h3 class="font-bold tracking-tight text-gray-900">Commande par jour</h3>
+            <canvas id="commandeChart" width="400" height="100"></canvas>
+        </div>
+        <div>
+            <h3 class="font-bold tracking-tight text-gray-900">Bonbon vendu par jour<sub class="italic font-light">Cliquer sur une noeu pour afficher la liste de bonbon</sub></h3>
+
+            <canvas id="bonbonDayChart" width="400" height="100"></canvas>
+        </div>
+        <div class="mt-6">
+            <h3 class="font-bold tracking-tight text-gray-900">Bonbon vendu au total</h3>
+            <canvas id="bonbonChart" width="400" height="100" ></canvas>
+        </div>
+    </div>
+<%- include('../components/footer'); -%>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="/chart.js"></script>
+</body>
+</html>

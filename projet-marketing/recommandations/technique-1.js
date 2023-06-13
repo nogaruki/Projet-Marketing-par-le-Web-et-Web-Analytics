@@ -1,52 +1,55 @@
 const _ = require('lodash');
 
-// Les données d'historique d'achats des clients et de la commande actuelle du client
+function recommanderProduitsSimilaires(historiqueAchatsSimilaire, commandeActuelle) {
 
-// Fonction de recommandation content-based
-function recommanderProduitsSimilaires(historiqueAchats, commandeActuelle) {
-  // On filtre les clients qui ont acheté des produits similaires à ceux dans la commande actuelle
-  const clientsSimilaires = _.filter(historiqueAchats, client => {
-    return _.intersectionBy(client.produits, commandeActuelle.produits, 'id').length > 0;
+  const clientsSimilaires = _.filter(historiqueAchatsSimilaire, client => {
+    const clientProduitsIds = _.flatMap(client, id => id.toString());
+    //console.log("clientProduitsIds", clientProduitsIds);
+    const commandeProduitsIds = _.map(commandeActuelle.produits, 'bonbon._id');
+    //console.log("commandeProduitsIds", commandeProduitsIds);
+    return _.intersection(clientProduitsIds, commandeProduitsIds).length > 0;
   });
 
-  // On rassemble tous les produits achetés par les clients similaires
-  const produitsSimilaires = _.flatMap(clientsSimilaires, client => {
+  //console.log("clients similaires", clientsSimilaires)
 
-    let produits = client.produits;
-    let produitsCommande = commandeActuelle.produits;
-    let produitsRecommandes = [];
-    // supprimer les produits de la variable produits qui sont dans la variable produitsCommande
-    for (let i = 0; i < produits.length; i++) {
-      let produit = produits[i];
-      let produitExiste = false;
-      for (let j = 0; j < produitsCommande.length; j++) {
-        let produitCommande = produitsCommande[j];
-        if (produit.id === produitCommande.id) {
-          produitExiste = true;
-          break;
+    const produitsSimilaires = _.flatMap(clientsSimilaires, client => {
+      let produits = client;
+      let produitsCommande = commandeActuelle.produits;
+      let produitsRecommandes = [];
+
+      for (let i = 0; i < produits.length; i++) {
+        let produit = produits[i];
+        let produitExiste = false;
+
+        for (let j = 0; j < produitsCommande.length; j++) {
+          let produitCommande = produitsCommande[j];
+          if (String(produit) === String(produitCommande._id)) {
+            produitExiste = true;
+            break;
+          }
+        }
+
+        if (!produitExiste) {
+          produitsRecommandes.push(produit);
         }
       }
-      if (!produitExiste) {
-        produitsRecommandes.push(produit);
-      }
 
-    }
+      return produitsRecommandes;
+    });
+    //console.log("produits similaires", produitsSimilaires);
 
-    return produitsRecommandes;
-    //console.log("produitsSimilaires", produitsSimilaires)
-  });
 
-  // On compte le nombre d'occurrences de chaque produit
-  const produitsComptes = _.countBy(produitsSimilaires, 'id');
+  const produitsComptes = _.countBy(produitsSimilaires, String);
+  //console.log("produits comptes", produitsComptes);
 
-  // On trie les produits par ordre décroissant de nombre d'occurrences
-  const produitsRecommandes = _.orderBy(_.keys(produitsComptes), produit => {
-    return produitsComptes[produit];
-  }, 'desc');
+    const produitsRecommandes = _.orderBy(_.keys(produitsComptes), produit => {
+      return produitsComptes[produit];
+    }, 'desc');
 
-  // On retire les produits déjà présents dans la commande actuelle
-  return _.difference(produitsRecommandes, _.map(commandeActuelle.produits, 'id'));
+    //const reco =  _.difference(produitsRecommandes, _.map(commandeActuelle.produits, '_id'));
+  const reco = _.difference(produitsRecommandes.slice(0, 4), commandeActuelle.produits.map(produit => produit.bonbon._id.toString()));
+  //console.log("recommandation", reco.length);
+    return reco;
+  }
 
-}
-
-module.exports = recommanderProduitsSimilaires;
+  module.exports = recommanderProduitsSimilaires;

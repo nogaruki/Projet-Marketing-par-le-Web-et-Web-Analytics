@@ -24,6 +24,9 @@
                         <%if(user){%>
                             <a href="/commandes" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mes commandes</a>
                             <a href="/logout" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</a>
+                            <%if(user.isAdmin){%>
+                                <a href="/dashboard" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+                            <%}%>
                         <%}%>
                     </div>
                 </div>
@@ -61,8 +64,15 @@
 
     <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2">
-            <a href="#" class="bg-blue-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Accueil</a>
-            <a href="#" class="text-gray-300 hover:bg-blue-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Catégories</a>
+            <a href="/" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Accueil</a>
+            <a href="/produits" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Produits</a>
+            <%if(user){%>
+            <a href="/commandes" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Mes commandes</a>
+            <a href="/logout" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Se déconnecter</a>
+            <%if(user.isAdmin){%>
+                <a href="/dashboard" class="text-grey-300 hover:bg-blue-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+            <%}%>
+            <%}%>
         </div>
     </div>
 </nav>

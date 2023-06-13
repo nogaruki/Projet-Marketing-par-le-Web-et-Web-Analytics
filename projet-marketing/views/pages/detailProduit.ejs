@@ -40,10 +40,33 @@
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ajouter au panier</button>
                 </div>
             </form>
+
         </div>
 
     </div>
-
+    <div>
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">Produits recommandés en fonction des caractéristiques du bonbon</h2>
+        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+            <% for (let j = 0; j < produitSimilaires.length; j++) { %>
+                <div class="group relative">
+                    <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                        <img src="<%- produitSimilaires[j].image %>" alt="<%- produitSimilaires[j].nom %>" class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                    </div>
+                    <div class="mt-4 flex justify-between">
+                        <div>
+                            <h3 class="text-sm text-gray-700">
+                                <a href="/produit/<%- produitSimilaires[j].id %>">
+                                    <span aria-hidden="true" class="absolute inset-0"></span>
+                                    <%- produitSimilaires[j].nom %>
+                                </a>
+                            </h3>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900"><%- produitSimilaires[j].prix %> €</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
 </div>
 <%- include('../components/footer'); -%>
 

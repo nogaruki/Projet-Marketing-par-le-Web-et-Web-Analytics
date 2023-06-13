@@ -1,42 +1,31 @@
-
 const _ = require('lodash');
 
-const recommanderProduits = (historiqueAchats, commandeActuelle) => {
-    // Vérifier si l'utilisateur a un historique d'achats
-    const utilisateur = historiqueAchats.find(
-      (client) => client.id === commandeActuelle.id
-    );
-    if (!utilisateur || !utilisateur.produits.length) {
-      console.log("L'utilisateur n'a pas d'historique d'achats.");
-      return [];
+function recommanderProduits(historiqueAchatsUser, commandeActuelle) {
+    if (!historiqueAchatsUser || historiqueAchatsUser.length === 0) {
+        console.log("L'utilisateur n'a pas d'historique d'achats.");
+        return [];
     }
-  
-    // Trouver les produits les plus achetés par l'utilisateur
-    const produitsLesPlusAchetes = _(utilisateur.produits)
-      .groupBy("nom")
-      .map((produits, nom) => ({
-        nom,
-        quantite: _.sumBy(produits, "quantite"),
-      }))
-      .orderBy("quantite", "desc")
-      .value();
-  
-    // Filtrez les produits recommandés pour éviter les doublons dans la commande actuelle
-    const recommandations = _.differenceWith(
-      produitsLesPlusAchetes,
-      commandeActuelle.produits,
-      (produit1, produit2) => produit1.nom === produit2.nom
-    );
-  
 
-    let produitsRecommandes = [];
-    for (let i = 0; i < recommandations.length; i++) {
-        produitsRecommandes.push(recommandations[i].nom);
-    }
-    console.log("Les recommandations sont :", produitsRecommandes);
+    const produitsRecommandes = historiqueAchatsUser.reduce((recommandations, client) => {
+        client.forEach(produit => {
+            const produitExiste = commandeActuelle.produits.some(produitCommande => String(produit) === String(produitCommande.bonbon._id));
+            if (!produitExiste) {
+                recommandations.push(produit);
+            }
+        });
+        return recommandations;
+    }, []);
 
-    return produitsRecommandes;
-  };
+    const produitsComptes = _.countBy(produitsRecommandes, String);
+    console.log("produits comptes", produitsComptes);
+    const produitsRecommandesTri = _.orderBy(_.keys(produitsComptes), produit => {
+        return produitsComptes[produit];
+    }, 'desc');
 
-  module.exports = recommanderProduits;
-  
+    const reco = _.difference(produitsRecommandesTri.slice(0, 4), commandeActuelle.produits.map(produit => produit.bonbon._id.toString()));
+
+    console.log("recommandation", reco);
+    return reco;
+}
+
+module.exports = recommanderProduits;
